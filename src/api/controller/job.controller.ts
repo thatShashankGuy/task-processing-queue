@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { getAllJobs, createJob } from '../../services/job.service';
 import { v4 as uuidv4 } from 'uuid';
 import { get_channel } from '../../util/rabbitmq';
-import { job_update_consumer } from '../../util/consumer';
+import { job_update_consumer } from '../../util/consumers';
 import { JOB_QUEUE, JOB_UPDATE_QUEUE } from '../../constants/jobs';
 
 export const jobs = async (request: FastifyRequest, reply: FastifyReply) => {
