@@ -15,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@types/amqplib": "^0.10.6",
     "@types/node": "^22.13.0",
     "@types/pg": "^8.11.11",
     "drizzle-kit": "^0.30.4",
@@ -23,9 +24,11 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "amqplib": "^0.10.5",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
     "fastify": "^5.2.1",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "uuid": "^11.0.5"
   }
 }
