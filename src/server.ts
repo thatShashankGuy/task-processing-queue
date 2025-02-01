@@ -4,7 +4,7 @@ import { job_routes } from './api/routes/job.routes';
 require('dotenv').config();
 
 const PORT = Number(process.env.PORT) || 8080;
-
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
 const fastify = Fastify({
   logger: true,
 });

@@ -61,3 +61,5 @@ pnpm-lock.yaml
 # Miscellaneous
 *.bak
 *.tmp
+
+/scratch
