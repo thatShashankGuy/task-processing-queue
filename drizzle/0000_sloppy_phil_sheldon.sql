@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE TYPE job_status AS ENUM ('PENDING', 'PROCESSING', 'COMPLETED', 'FAILED');
 CREATE TABLE "users" (
 	"id" text PRIMARY KEY DEFAULT uuid_generate_v4() NOT NULL,
 	"type" text,
