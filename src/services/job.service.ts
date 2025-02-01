@@ -1,5 +1,5 @@
 import { db } from '../config/db';
-import { Job_Table } from '../model/schema';
+import { Job_Table } from '../config/schema';
 import { eq } from 'drizzle-orm';
 import { Job, Status } from '../types/job.types';
 
