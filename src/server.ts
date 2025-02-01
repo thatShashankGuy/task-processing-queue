@@ -15,7 +15,7 @@ fastify.register(job_routes);
 const start_server = async () => {
   try {
     await fastify.listen({ port: PORT });
-  } catch (error: any) {
+  } catch (error: unknown) {
     fastify.log.error(
       `Error occurred while starting the server : ${error_map(error)}`,
     );

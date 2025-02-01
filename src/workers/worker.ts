@@ -33,14 +33,14 @@ async function start_worker() {
 
         console.log(`Job ${job_data.id} processed , update published`);
         channel.ack(msg);
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Invalid job format', error.message);
       }
     }
   });
 }
 
-start_worker().catch((error: any) => {
+start_worker().catch((error: unknown) => {
   console.error('Worker Error:', error.message);
   process.exit(-1);
 });

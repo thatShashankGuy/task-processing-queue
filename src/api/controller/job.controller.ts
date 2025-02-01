@@ -9,7 +9,7 @@ export const jobs = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     const jobs = await getAllJobs();
     reply.send(jobs);
-  } catch (error: any) {
+  } catch (error: unknown) {
     reply.code(500).send({ error: error.messagae });
   }
 };
@@ -39,7 +39,7 @@ export const update_jobs = async (
     });
 
     reply.code(201).send({ id, status });
-  } catch (error: any) {
+  } catch (error: unknown) {
     reply.code(500).send({ error: 'Database error' });
     return;
   }

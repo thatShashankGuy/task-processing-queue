@@ -1,3 +1,7 @@
-const error_map = (error: any) => {
-  return error.message ? error.message : error;
+const error_map = (error: unknown): string | unknown => {
+  if (error instanceof Error) {
+    return error.message;
+  } else {
+    return error;
+  }
 };
