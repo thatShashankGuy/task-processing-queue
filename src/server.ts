@@ -1,10 +1,11 @@
 import Fastify from 'fastify';
 import { job_routes } from './api/routes/job.routes';
+import { v4 as uuidv4 } from 'uuid';
 
 require('dotenv').config();
 
 const PORT = Number(process.env.PORT) || 8080;
-console.log('DATABASE_URL:', process.env.DATABASE_URL);
+
 const fastify = Fastify({
   logger: true,
 });
