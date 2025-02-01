@@ -18,29 +18,40 @@ The system is designed to be scalable, allowing multiple producers and consumers
 
 ```
 task-processing-queue/
-├── src/
-│   ├── producer/
-│   │   └── producer.js
-│   ├── consumer/
-│   │   └── consumer.js
-│   ├── queue/
-│   │   └── queue.js
-│   └── utils/
-│       └── helpers.js
-├── tests/
-│   ├── producer.test.js
-│   ├── consumer.test.js
-│   └── queue.test.js
-├── README.md
-└── package.json
+src
+├── api
+│   ├── controller
+│   │   └── job.controller.ts
+│   └── routes
+│       └── job.routes.ts
+├── config
+│   ├── db.ts
+│   └── schema.ts
+├── constants
+│   └── jobs.ts
+├── migrations
+├── server.ts
+├── services
+│   └── job.service.ts
+├── types
+│   └── job.types.ts
+├── util
+│   ├── consumers.ts
+│   ├── error.ts
+│   └── rabbitmq.ts
+└── workers
+    └── worker.ts
 ```
 
 - **src/**: Contains the source code for the project.
-  - **producer/**: Code related to task production.
-  - **consumer/**: Code related to task consumption.
-  - **queue/**: Implementation of the queue.
+  - **api/**: Contains controllers and routes for api.
+  - **config/**: Implementation of database using Drizzle ORM.
+  - **const/**: Declared Constants.
   - **utils/**: Utility functions and helpers.
-- **tests/**: Contains test files for the project.
+  - **services/** : Database Queries and other services.
+  - **types/** : Shared Types for static type checking
+  - **workers/** : Workers to process job
+- **tests/**: To do.
 - **README.md**: Project documentation.
 - **package.json**: Project dependencies and scripts.
 
@@ -59,6 +70,7 @@ npm install
 To run the tests, use the following command:
 
 ```bash
+#testing to be done
 npm test
 ```
 
