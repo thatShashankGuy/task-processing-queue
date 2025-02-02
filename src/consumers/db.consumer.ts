@@ -1,19 +1,28 @@
-import { get_channel } from '../../util/rabbitmq';
-import { JOB_QUEUE, JOB_UPDATE_QUEUE } from '../../constants/jobs';
-import { Job } from '../../types/job.types';
-import { updateJobStatusIntoAFile } from '../../services/job.service';
-import logger from '../../util/logger';
+import { get_channel } from '../config/rabbitmq';
+import {
+  NOTIFICATION_QUEUE,
+  JOB_DB_UPDATE_QUEUE,
+  FAN_EXCHANGE,
+} from '../constants/queues';
+import { Job } from '../types/job.types';
+import { updateJobStatus } from '../services/job.service';
+import logger from '../utils/logger';
 require('dotenv').config();
 
 async function start_worker() {
   const channel = await get_channel();
 
-  await channel.assertQueue(JOB_QUEUE, { durable: true });
-  await channel.assertQueue(JOB_UPDATE_QUEUE, { durable: true });
+  await channel.assertExchange(FAN_EXCHANGE, 'fanout', { durable: false });
 
-  logger.info('Worker is waiting for message ⏳⏳⏳⏳');
+  const DB_QUEUE = await channel.assertQueue(JOB_DB_UPDATE_QUEUE, {
+    durable: true,
+  });
+  await channel.bindQueue(DB_QUEUE.queue, FAN_EXCHANGE, '');
+  await channel.assertQueue(NOTIFICATION_QUEUE, { durable: true });
 
-  channel.consume(JOB_QUEUE, async (msg) => {
+  logger.info('DB Processing Consumer is waiting for message ⏳⏳⏳⏳');
+
+  channel.consume(DB_QUEUE.queue, async (msg) => {
     let job_data: Job;
     if (msg) {
       const content = msg.content.toString();
@@ -24,14 +33,14 @@ async function start_worker() {
         logger.info(`Processing job ${job_data.id}...`);
 
         setTimeout(() => {
-          updateJobStatusIntoAFile(job_data.id!, 'COMPLETED')
+          updateJobStatus(job_data.id!, 'COMPLETED')
             .then(() => {
               const update_message = JSON.stringify({
                 id: job_data.id,
                 status: 'COMPLETED',
               });
               channel.sendToQueue(
-                JOB_UPDATE_QUEUE,
+                NOTIFICATION_QUEUE,
                 Buffer.from(update_message),
                 {
                   persistent: true,

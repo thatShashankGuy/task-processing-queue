@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import { job_routes } from './api/routes/job.routes';
-import logger from './util/logger';
+import logger from './utils/logger';
 
 require('dotenv').config();
 
