@@ -8,7 +8,7 @@ export const job_update_consumer = (msg: ConsumeMessage | null) => {
 
       // to do job status update in db ;
     } catch (error: unknown) {
-      throw new error('Error processing job Updates ');
+      if (error instanceof Error) throw error;
     }
   }
 };

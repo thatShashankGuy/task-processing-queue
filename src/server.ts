@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import { job_routes } from './api/routes/job.routes';
-import { v4 as uuidv4 } from 'uuid';
+import logger from './util/logger';
 
 require('dotenv').config();
 
@@ -16,9 +16,8 @@ const start_server = async () => {
   try {
     await fastify.listen({ port: PORT });
   } catch (error: unknown) {
-    fastify.log.error(
-      `Error occurred while starting the server : ${error_map(error)}`,
-    );
+    if (error instanceof Error)
+      logger.error(`error starting server: ${error.message}`);
   }
 };
 

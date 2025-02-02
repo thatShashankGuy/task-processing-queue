@@ -9,8 +9,10 @@ export const jobs = async (request: FastifyRequest, reply: FastifyReply) => {
   try {
     const jobs = await getAllJobs();
     reply.send(jobs);
+    return;
   } catch (error: unknown) {
-    reply.code(500).send({ error: error.messagae });
+    if (error instanceof Error) reply.code(500).send({ error: error });
+    return;
   }
 };
 
@@ -39,8 +41,9 @@ export const update_jobs = async (
     });
 
     reply.code(201).send({ id, status });
+    return;
   } catch (error: unknown) {
-    reply.code(500).send({ error: 'Database error' });
+    if (error instanceof Error) reply.code(500).send({ error: error });
     return;
   }
 };
