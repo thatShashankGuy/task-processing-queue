@@ -80,33 +80,21 @@ cd task-processing-queue
 npm install
 ```
 
-```
+```mermaid
 flowchart TD
-  subgraph API Layer
-    A[Client Request]
-    B[Fastify API Controller]
+subgraph Client layer
+A[Producer Script]
+end
+subgraph API Layer
+    A[Producer Script] -->|Sends Payloads at regular interval| B[Fastify API Controller]
   end
-
-  subgraph Job Publisher
-    B -->|Creates Job in DB| C[Job Persistence]
-    B -->|Publishes Job Message| D[RabbitMQ Fanout Exchange<br/>(FAN_EXCHANGE)]
-  end
-
-  subgraph Fanout Routing
-    D -->|Broadcasts copy| E[DB Update Queue<br/>(JOB_DB_UPDATE_QUEUE)]
-    D -->|Broadcasts copy| F[CSV Update Queue<br/>(JOB_CSV_UPDATE_QUEUE)]
-  end
-
-  subgraph Consumers
-    E --> G[DB Consumer<br/>(Processes & Updates DB)]
-    F --> H[CSV Consumer<br/>(Processes & Updates CSV File)]
-  end
-
-  subgraph Update Notifications
-    G --> I[Update Queue<br/>(JOB_QUEUE)]
-    H --> I
-    I --> J[UI / GET Endpoint<br/>(Job Status Retrieval)]
-  end
+subgraph Pub Sub Layer
+    B -->|Publishes Job Message| C[RabbitMQ Fanout Exchange]
+    C[RabbitMQ Fanout Exchange] --> |Fan Exhange Updates Queue| E[DB Consumer]
+    C[RabbitMQ Fanout Exchange] --> |Updates DB Update Queue| F[File Consumer]
+    E[DB Consumer] --> |Updates DB| H[Database]
+    F[FILE Consumer] --> |Updates CSV| K[CSV]
+end
 
 ```
 
