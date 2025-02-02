@@ -1,6 +1,6 @@
 import { createLogger, format, transports } from 'winston';
 
-const customLevels = {
+const custom_level = {
   levels: {
     error: 0,
     warn: 1,
@@ -18,13 +18,13 @@ const customLevels = {
 };
 
 import * as winston from 'winston';
-winston.addColors(customLevels.colors);
+winston.addColors(custom_level.colors);
 
 const env = process.env.NODE_ENV || 'development';
 const level = env === 'production' ? 'warn' : 'debug';
 
 const logger = createLogger({
-  levels: customLevels.levels,
+  levels: custom_level.levels,
   level: level,
   format: format.combine(
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
