@@ -5,6 +5,7 @@ jspm_packages/
 # Production build output
 dist/
 build/
+out/
 
 # Logs
 logs/

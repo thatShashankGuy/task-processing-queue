@@ -36,34 +36,36 @@ task-processing-queue/
 │   │   └── routes
 │   │       └── job.routes.ts
 │   ├── config
-│   │   └── db.ts
+│   │   ├── db.ts
+│   │   └── rabbitmq.ts
 │   ├── constants
-│   │   └── jobs.ts
+│   │   └── queues.ts
+│   ├── consumers
+│   │   ├── db.consumer.ts
+│   │   └── file.consumer.ts
 │   ├── migrations
 │   │   └── schema.ts
+│   ├── producer
+│   │   └── producer.ts
 │   ├── server.ts
 │   ├── services
 │   │   └── job.service.ts
 │   ├── types
 │   │   └── job.types.ts
-│   ├── util
-│   │   ├── consumers.ts
-│   │   ├── logger.ts
-│   │   └── rabbitmq.ts
-│   └── workers
-│       ├── consumer.ts
-│       └── producer.ts
+│   └── utils
+│       └── logger.ts
 └── tsconfig.json
 ```
 
 - **src/**: Contains the source code for the project.
-  - **api/**: Contains controllers and routes for api.
-  - **config/**: Implementation of database using Drizzle ORM.
-  - **const/**: Declared Constants.
-  - **utils/**: Utility functions and helpers.
+  - **api/**: controllers and routes for api.
+  - **config/**: Datbase , RabbitMQ connections
+  - **const/**: Queues Declarations,Constants.
+  - **utils/**: Utility functions,loggers.
   - **services/** : Database Queries and other services.
   - **types/** : Shared Types for static type checking
-  - **workers/** : Workers to process job
+  - **producer/** : Job producer
+  - **consumer/**: DB consumer, File Consumer
 - **tests/**: To do.
 - **README.md**: Project documentation.
 - **package.json**: Project dependencies and scripts.
