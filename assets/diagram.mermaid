@@ -10,8 +10,9 @@ subgraph Pub Sub Layer
     B -->|Publishes Job Message| C[RabbitMQ Fanout Exchange]
     C[RabbitMQ Fanout Exchange] --> |Fan Exhange Updates Queue| E[DB Consumer]
     C[RabbitMQ Fanout Exchange] --> |Updates DB Update Queue| F[File Consumer]
-    E[DB Consumer] --> |Updates DB| H[Database]
-    F[FILE Consumer] --> |Updates CSV| K[CSV]
+subgraph Data Layet
+ E[DB Consumer] --> |Updates DB| H[Database]
+F[FILE Consumer] --> |Updates CSV| K[CSV]
 end
 
 ```
