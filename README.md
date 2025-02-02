@@ -75,9 +75,39 @@ task-processing-queue/
 To get started with the project, clone the repository and install the dependencies:
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/thatShashankGuy/task-processing-queue
 cd task-processing-queue
 npm install
+```
+
+```
+flowchart TD
+  subgraph API Layer
+    A[Client Request]
+    B[Fastify API Controller]
+  end
+
+  subgraph Job Publisher
+    B -->|Creates Job in DB| C[Job Persistence]
+    B -->|Publishes Job Message| D[RabbitMQ Fanout Exchange<br/>(FAN_EXCHANGE)]
+  end
+
+  subgraph Fanout Routing
+    D -->|Broadcasts copy| E[DB Update Queue<br/>(JOB_DB_UPDATE_QUEUE)]
+    D -->|Broadcasts copy| F[CSV Update Queue<br/>(JOB_CSV_UPDATE_QUEUE)]
+  end
+
+  subgraph Consumers
+    E --> G[DB Consumer<br/>(Processes & Updates DB)]
+    F --> H[CSV Consumer<br/>(Processes & Updates CSV File)]
+  end
+
+  subgraph Update Notifications
+    G --> I[Update Queue<br/>(JOB_QUEUE)]
+    H --> I
+    I --> J[UI / GET Endpoint<br/>(Job Status Retrieval)]
+  end
+
 ```
 
 ## Running Tests
