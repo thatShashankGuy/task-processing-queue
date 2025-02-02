@@ -18,29 +18,42 @@ The system is designed to be scalable, allowing multiple producers and consumers
 
 ```
 task-processing-queue/
-src
-├── api
-│   ├── controller
-│   │   └── job.controller.ts
-│   └── routes
-│       └── job.routes.ts
-├── config
-│   ├── db.ts
-│   └── schema.ts
-├── constants
-│   └── jobs.ts
-├── migrations
-├── server.ts
-├── services
-│   └── job.service.ts
-├── types
-│   └── job.types.ts
-├── util
-│   ├── consumers.ts
-│   ├── error.ts
-│   └── rabbitmq.ts
-└── workers
-    └── worker.ts
+.
+├── README.md
+├── docker-compose.yml
+├── drizzle
+│   ├── 0000_sloppy_phil_sheldon.sql
+│   └── meta
+│       ├── 0000_snapshot.json
+│       └── _journal.json
+├── drizzle.config.ts
+├── package-lock.json
+├── package.json
+├── src
+│   ├── api
+│   │   ├── controller
+│   │   │   └── job.controller.ts
+│   │   └── routes
+│   │       └── job.routes.ts
+│   ├── config
+│   │   └── db.ts
+│   ├── constants
+│   │   └── jobs.ts
+│   ├── migrations
+│   │   └── schema.ts
+│   ├── server.ts
+│   ├── services
+│   │   └── job.service.ts
+│   ├── types
+│   │   └── job.types.ts
+│   ├── util
+│   │   ├── consumers.ts
+│   │   ├── logger.ts
+│   │   └── rabbitmq.ts
+│   └── workers
+│       ├── consumer.ts
+│       └── producer.ts
+└── tsconfig.json
 ```
 
 - **src/**: Contains the source code for the project.

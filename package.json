@@ -6,7 +6,8 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev:api": "npm run build && node --watch dist/server.js",
-    "dev:worker": "npm run build && node --watch dist/workers/worker.js",
+    "dev:consumer": "npm run build && node --watch dist/workers/consumer.js",
+    "dev:producer": "npm run build && node --watch dist/workers/producer.js",
     "format": "npx prettier --write \"**/*.{js,ts,json,md}\" ",
     "db:generate": "npx drizzle-kit generate",
     "db:migrate": "npx drizzle-kit migrate"
