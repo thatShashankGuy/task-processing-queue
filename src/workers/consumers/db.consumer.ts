@@ -1,8 +1,12 @@
-import { get_channel } from '../util/rabbitmq';
-import { JOB_QUEUE, JOB_UPDATE_QUEUE } from '../constants/jobs';
-import { Job } from '../types/job.types';
-import { updateJobStatus } from '../services/job.service';
-import logger from '../util/logger';
+import { get_channel } from '../../util/rabbitmq';
+import {
+  JOB_QUEUE,
+  JOB_UPDATE_QUEUE,
+  JOB_CSV_UPDATE_QUEUE,
+} from '../../constants/jobs';
+import { Job } from '../../types/job.types';
+import { updateJobStatus } from '../../services/job.service';
+import logger from '../../util/logger';
 require('dotenv').config();
 
 async function start_worker() {
@@ -13,7 +17,7 @@ async function start_worker() {
 
   logger.info('Worker is waiting for message ⏳⏳⏳⏳');
 
-  channel.consume(JOB_QUEUE, async (msg) => {
+  channel.consume(JOB_UPDATE_QUEUE, async (msg) => {
     let job_data: Job;
     if (msg) {
       const content = msg.content.toString();
@@ -31,7 +35,7 @@ async function start_worker() {
                 status: 'COMPLETED',
               });
               channel.sendToQueue(
-                JOB_UPDATE_QUEUE,
+                JOB_CSV_UPDATE_QUEUE,
                 Buffer.from(update_message),
                 {
                   persistent: true,
