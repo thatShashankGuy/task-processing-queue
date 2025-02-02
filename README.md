@@ -70,6 +70,10 @@ task-processing-queue/
 - **README.md**: Project documentation.
 - **package.json**: Project dependencies and scripts.
 
+## Architecture diagram
+
+![Architecture diagram](assets/diagram.svg)
+
 ## Getting Started
 
 To get started with the project, clone the repository and install the dependencies:
@@ -78,24 +82,6 @@ To get started with the project, clone the repository and install the dependenci
 git clone https://github.com/thatShashankGuy/task-processing-queue
 cd task-processing-queue
 npm install
-```
-
-```mermaid
-flowchart TD
-subgraph Client layer
-A[Producer Script]
-end
-subgraph API Layer
-    A[Producer Script] -->|Sends Payloads at regular interval| B[Fastify API Controller]
-  end
-subgraph Pub Sub Layer
-    B -->|Publishes Job Message| C[RabbitMQ Fanout Exchange]
-    C[RabbitMQ Fanout Exchange] --> |Fan Exhange Updates Queue| E[DB Consumer]
-    C[RabbitMQ Fanout Exchange] --> |Updates DB Update Queue| F[File Consumer]
-    E[DB Consumer] --> |Updates DB| H[Database]
-    F[FILE Consumer] --> |Updates CSV| K[CSV]
-end
-
 ```
 
 ## Running Tests
